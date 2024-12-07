@@ -1,0 +1,75 @@
+{%  extends "home/base.html" %}
+{% block start %}
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <h2>Add Receipe</h2>
+            <hr>
+          <label for="exampleInputEmail1" class="form-label" >Receipe</label>
+          <input type="text" required    name="receipe_name"  class="form-control" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Receipe Description</label>
+          <textarea required   name="receipe_description"  class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"> Receipe Image</label>
+          <input type="file"  name="receipe_image" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Add Receipe</button>
+      </form>
+
+      <hr>
+
+      <div class="container mt-3" >
+
+        <form class="d-flex" role="search">
+
+          <input class="form-control me-2" type="search"  name= "search" placeholder="Search" aria-label="Search" type="text"
+          style=" background-color: lightgrey; color: black; height:40%">
+
+          <button class="btn btn-outline-success" type="submit">Search Food </button>
+        </form>
+      </div>
+      <br>
+
+
+      <table class="table" style="border: 1.7px solid black; border-collapse: collapse; width: 100%;">
+        <thead style="border: 1.7px solid black;">
+            <tr>
+                <th scope="col" style="border: 1.7px solid black;">#</th>
+                <th scope="col" style="border: 1.7px solid black;">Receipe name</th>
+                <th scope="col" style="border: 1.7px solid black;">Receipe Description</th>
+                <th scope="col" style="border: 1.7px solid black;">Image</th>
+                <th scope="col" style="border: 1.7px solid black;">Update</th>
+                <th scope="col" style="border: 1.7px solid black;">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in receipes %}
+            <tr>
+                <th scope="row" style="border: 1.7px solid black;">
+                  {{ r.id }}</th>
+
+                <td style="border: 1.7px solid black;">
+                  {{ r.receipe_name }}</td>
+                <td style="border: 1.7px solid black;">
+                  {{ r.receipe_description }}</td>
+                <td style="border: 1.7px solid black;">
+                    <img src="/media/{{ r.receipe_image }}" style="height:90px; width:70px;">
+                </td>
+                <td style="border: 1.7px solid black;">
+                    <a href="/update-receipe/{{ r.id }}/" class="btn btn-warning">UPDATE</a>
+                </td>
+                <td style="border: 1.7px solid black;">
+                    <a href="/delete-receipe/{{ r.id }}/" class="btn btn-danger">DELETE</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+
+{% endblock %}
