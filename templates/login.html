@@ -1,0 +1,53 @@
+{% extends "home/base.html" %}
+{% block start %}
+<div style="background-color: #121212; min-height: 100vh; padding-top: 50px;">
+    <div class="container">
+        <form class="col-6 mx-auto card p-4 shadow-lg" method="post" enctype="multipart/form-data" style="background-color: #1c1c1c; color: white; border: 1px solid lightblue;">
+            {% csrf_token %}
+            <div class="mb-3">
+                <h2 class="text-center" style="color: #3498db;">Login Page</h2>
+                <hr style="border-top: 2px solid #3498db;">
+            </div>
+
+            <!-- message section-->
+            {% if messages %}
+            {{ messages.tags }}
+            <div class="alert alert-warning" role="alert"> 
+                {% for message in messages %}
+                {{message}}
+                {% endfor %}
+
+            </div>
+             {% endif %}
+
+
+
+            <!-- usernam -->
+            <div class="mb-3">
+                <label for="username" class="form-label" style="color: #ffffff;">Username</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username" required style="background-color: #2c2c2c; color: rgb(237, 226, 226); border: 1px solid #3498db;">
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label" style="color: #ffffff;">Password</label>
+                <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter your password" style="background-color: #2c2c2c; color: white; border: 1px solid #3498db;">
+            </div>
+
+            <!-- Remember Me Checkbox -->
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" style="border-color: #3498db;">
+                <label class="form-check-label" for="exampleCheck1" style="color: #ffffff;">Remember me</label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn w-100 mt-3" style="background-color: #3498db; color: white;">Submit</button>
+
+            <!-- Registration Link -->
+            <p class="mt-3 text-center" style="color: #ffffff;">Don't have an account? 
+                <a href="register-page" style="color: #3498db; text-decoration: none;">Register</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

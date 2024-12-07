@@ -1,0 +1,66 @@
+{% extends "home/base.html" %}
+{% block start %}
+<div style="background-color: #121212; min-height: 100vh; padding-top: 50px;">
+    <div class="container">
+        <form class="col-6 mx-auto card p-4 shadow-lg" method="post" enctype="multipart/form-data" style="background-color: #1c1c1c; color: white; border: solid 2px rgb(156, 156, 88);">
+            {% csrf_token %}
+
+
+            <div class="mb-3">
+                <h2 class="text-center" style="color: #f1c40f">Register</h2>
+                <hr style="border-top: 2px solid #f1c40f;">
+            </div>
+            {% if messages %}
+            {{ messages.tags }}
+            <div class="alert alert-warning" role="alert"> 
+                {% for message in messages %}
+                {{message}}
+                {% endfor %}
+
+            </div>
+             {% endif %}
+        
+
+
+            <!-- Firstname -->
+            <div class="mb-3">
+                <label for="firstname" class="form-label" style="color: #ffffff;">Firstname</label>
+                <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Enter Firstname" required style="background-color: #2c2c2c; color: white; border: 1px solid #f1c40f;">
+            </div>
+
+            <!-- Lastname -->
+            <div class="mb-3">
+                <label for="last_name" class="form-label" style="color: #ffffff;">Lastname</label>
+                <input type="text" name="last_name" class="form-control" id="lastname" placeholder="Enter Lastname" required style="background-color: #2c2c2c; color: white; border: 1px solid #f1c40f;">
+            </div>
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="username" class="form-label" style="color: #ffffff;">Username</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username" required style="background-color: #2c2c2c; color: white; border: 1px solid #f1c40f;">
+            </div>
+            <!-- Email Section-->
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label" style="color: #ffffff;">Email address</label>
+                <input type="email" class="form-control" name="email"
+                id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email" style="background-color: #2c2c2c; color: white; border: 1px solid #f1c40f;">
+                <div id="emailHelp" class="form-text" style="color: #b0bec5;">We'll never share your email with anyone else.</div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label" style="color: #ffffff;">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required style="background-color: #2c2c2c; color: white; border: 1px solid #f1c40f;">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn w-100 mt-3" style="background-color: #f1c40f; color: black;">Register</button>
+
+            <!-- Already have an account -->
+            <p class="mt-3 text-center" style="color: #ffffff;">Already have an account? 
+                <a href="login-page" style="color: #f1c40f; text-decoration: none;">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

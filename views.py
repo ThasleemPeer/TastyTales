@@ -1,8 +1,12 @@
 from django.shortcuts import render,redirect
 from .models import *
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+@login_required(login_url="/login-page")
 def receipes(request):
     if request.method=='POST':
 
@@ -27,7 +31,7 @@ def receipes(request):
     return render(request,'receipes.html',context)
 
 
-
+@login_required(login_url="/login-page")
 def update_receipe(request,id):
     queryset=Receipe.objects.get(id=id)
 
@@ -51,13 +55,72 @@ def update_receipe(request,id):
 
     return render(request,'updated_receipes.html',context)
 
-
+@login_required(login_url="/login-page")
 def delete_receipe(request,id):
     queryset=Receipe.objects.get(id=id)
     queryset.delete()
     return redirect('/receipe-page')
 
+# login-page
 
+def login_page(request):
+
+    
+    if request.method=="POST":
+           
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        print(username)
+        print(password)
+        if not  User.objects.filter(username=username).exists():
+            messages.error(request,"invalid user Credentials")
+            return redirect("/login-page")
+        
+        user=authenticate(username=username,password=password)
+        if user is None:
+            messages.error(request,"invalid user Credentials")
+            return redirect("/login-page")
+        else:
+            login(request,user)
+            return redirect('/receipe-page') 
+        
+
+
+
+    return render(request,'login.html')
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login-page')
+
+
+def register_page(request):
+
+    if request.method=="POST":
+        first_name=request.POST.get('first_name')
+        last_name=request.POST.get('last_name')
+        email=request.POST.get('email')
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+
+        user=User.objects.filter(username=username)
+
+        if user.exists():
+            messages.info(request,'OOPS !! Username already Taken ')
+            return redirect('/register-page')
+
+
+        user=User.objects.create(first_name=first_name,
+                                 last_name=last_name,
+                                 email=email,
+                                 username=username,
+                                 )
+        user.set_password(password)
+        user.save()
+        messages.info(request,'Account Created Successfully')
+        return redirect('/register-page')        
+
+    return render(request,'register.html')
 
 
 
